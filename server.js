@@ -6,6 +6,7 @@ import path from 'path';
 // Define the port number the server will listen on
 const PORT = process.env.PORT || 3000;
 
+// Define Node Environment
 const NODE_ENV= process.env.NODE.ENV || 'production';
 
 // Declare file variables
