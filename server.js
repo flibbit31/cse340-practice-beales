@@ -7,7 +7,7 @@ import path from 'path';
 const PORT = process.env.PORT || 3000;
 
 // Define Node Environment
-const NODE_ENV= process.env.NODE.ENV || 'production';
+const NODE_ENV= process.env.NODE_ENV || 'production';
 
 // Declare file variables
 const __filename = fileURLToPath(import.meta.url);
@@ -22,6 +22,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 //EJS configuration
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
+
+app.use((req, res, next) => {
+    // Make NODE_ENV available to all templates
+    res.locals.NODE_ENV = NODE_ENV.toLowerCase() || 'production';
+
+    //continue to next middleware or route handler
+    next();
+});
 
 /**
  * Routes
@@ -41,6 +49,27 @@ app.get('/products', (req, res) => {
     const title = 'Our Products';
     res.render('products', { title });
 });
+
+// When in development mode, start a WebSocket server for live reloading
+if (NODE_ENV.includes('dev')) {
+    const ws = await import('ws');
+
+    try {
+        const wsPort = parseInt(PORT) + 1;
+        const wsServer = new ws.WebSocketServer({ port: wsPort });
+
+        wsServer.on('listening', () => {
+            console.log(`WebSocket server is running on port ${wsPort}`);
+        });
+
+        wsServer.on('error', (error) => {
+            console.error('WebSocket server error:', error);
+        });
+    }
+    catch (error) {
+        console.error('Failed to start WebSocket server:', error);
+    }
+}
 
 // Start the server and listen on the specified port
 app.listen(PORT, () => {
