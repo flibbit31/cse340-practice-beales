@@ -28,6 +28,14 @@
         </div>
     </div>
 
+    <div>
+        <ul>
+            <% for (const param in queryParams) { %> 
+                <li><%= `${param} = ${queryParams[param]}` %></li>
+            <% }; %>
+        </ul>
+    </div>
+
     <div class="navigation">
         <p><a href="/catalog">&larr; Back to Course Catalog</a></p>
     </div>

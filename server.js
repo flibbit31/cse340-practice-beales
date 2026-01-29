@@ -69,6 +69,76 @@ app.use((req, res, next) => {
 });
 
 /**
+ * Global Middleware
+ */
+
+app.use((req, res, next) => {
+    // Skip logging for routes that start with /. (lie /.well-known/)
+    if (!req.path.startsWith('/.')) {
+    }
+
+    next(); // Pass control to the next middlware or route
+});
+
+// Middleware to add global data to all templates
+app.use((req, res, next) => {
+    // Add current year for copyright
+    res.locals.currentYear = new Date().getFullYear();
+
+    next();
+});
+
+// Global middleware for time-based greeting
+app.use((req, res, next) => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour < 12) {
+        res.locals.greeting = 'Good Morning!';
+    }
+    
+    else if (currentHour > 17) {
+        res.locals.greeting = 'Good Evening!';
+    }
+
+    else {
+        res.locals.greeting = 'Good Afternoon!';
+    }
+
+    next();
+});
+
+// Global middleware for random theme selection
+app.use((req, res, next) => {
+    const themes = ['blue-theme', 'green-theme', 'red-theme'];
+
+    const randomIndex = Math.floor(Math.random() * themes.length);
+    const randomTheme = themes[randomIndex];
+    res.locals.bodyClass = randomTheme;
+
+    next();
+});
+
+// Global middleware to share query parameters with templates
+app.use((req, res, next) => {
+    // Make req.query available to all templates for debugging and conditional rendering
+    res.locals.queryParams = req.query || {};
+
+    next();
+});
+
+/**
+ * Route-specific middleware
+ */
+
+// Route-specific middleware that sets custom headers
+const addDemoHeaders = (req, res, next) => {
+    res.setHeader('X-Demo-Page', 'true');
+    res.setHeader('X-Middleware-Demo', 'Hello Class!');
+
+    next();
+};
+
+/**
  * Routes
  */
 
@@ -159,6 +229,13 @@ app.get('/catalog/:courseId', (req, res, next) => {
         title: `${course.id} - ${course.title}`,
         course: { ...course, sections: sortedSections },
         currentSort: sortBy
+    });
+});
+
+// Demo page route with header middleware
+app.get('/demo', addDemoHeaders, (req, res) => {
+    res.render('demo', {
+        title: 'Middleware Demo Page'
     });
 });
 
