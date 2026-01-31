@@ -3,7 +3,7 @@ import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
-// Course data - place this after imports, before routes
+// Course data 
 const courses = {
     'CS121': {
         id: 'CS121',
@@ -64,21 +64,12 @@ app.use((req, res, next) => {
     // Make NODE_ENV available to all templates
     res.locals.NODE_ENV = NODE_ENV.toLowerCase() || 'production';
 
-    //continue to next middleware or route handler
     next();
 });
 
 /**
  * Global Middleware
  */
-
-app.use((req, res, next) => {
-    // Skip logging for routes that start with /. (lie /.well-known/)
-    if (!req.path.startsWith('/.')) {
-    }
-
-    next(); // Pass control to the next middlware or route
-});
 
 // Middleware to add global data to all templates
 app.use((req, res, next) => {
@@ -150,11 +141,6 @@ app.get('/', (req, res) => {
 app.get('/about', (req, res) => {
     const title = 'About Me';
     res.render('about', { title });
-});
-
-app.get('/products', (req, res) => {
-    const title = 'Our Products';
-    res.render('products', { title });
 });
 
 // When in development mode, start a WebSocket server for live reloading
