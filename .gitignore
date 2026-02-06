@@ -1,4 +1,5 @@
 .env
+byuicse-psql-cert.pem
 
 # Logs
 logs
