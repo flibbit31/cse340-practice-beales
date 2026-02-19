@@ -67,21 +67,22 @@ startSessionCleanup();
  */
 app.use(express.static(path.join(__dirname, 'public')));
 
-console.log('server.js1');
-
 /**
  * Global Middleware
  */
 app.use(addLocalVariables);
 
-console.log('server.js2');
-
 //Allow Express to receive and process POST data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+console.log('serverjs1');
+
 app.set('view engine', 'ejs');
+console.log('serverjs1.5');
 app.set('views', path.join(__dirname, 'src/views'));
+
+console.log('serverjs2');
 
 // Flash message middleware (must come after session and global middleware)
 app.use(flash);
