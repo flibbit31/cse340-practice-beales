@@ -24,8 +24,6 @@ const __dirname = path.dirname(__filename);
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
 const PORT = process.env.PORT || 3000;
 
-console.log("Server.js()");
-
 /**
  * Setup Express Server
  */
@@ -67,22 +65,17 @@ startSessionCleanup();
  */
 app.use(express.static(path.join(__dirname, 'public')));
 
-/**
- * Global Middleware
- */
-app.use(addLocalVariables);
-
 //Allow Express to receive and process POST data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-console.log('serverjs1');
-
 app.set('view engine', 'ejs');
-console.log('serverjs1.5');
 app.set('views', path.join(__dirname, 'src/views'));
 
-console.log('serverjs2');
+/**
+ * Global Middleware
+ */
+app.use(addLocalVariables);
 
 // Flash message middleware (must come after session and global middleware)
 app.use(flash);

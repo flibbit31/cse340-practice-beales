@@ -48,7 +48,6 @@ const setHeadAssetsFunctionality = (res) => {
 };
 
 const addLocalVariables = (req, res, next) => {
-    console.log("AddLocalVariables()");
     // Set current year for use in templates
     res.locals.currentYear = new Date().getFullYear();
     // Make NODE_ENV available to all templates
