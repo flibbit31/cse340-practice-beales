@@ -7,6 +7,7 @@ import loginRoutes from './forms/login.js';
 import { processLogout, showDashboard } from './forms/login.js';
 import { requireLogin } from '../middleware/auth.js';
 import { homePage, aboutPage, demoPage, testErrorPage } from './index.js';
+import { contactValidation, registrationValidation, loginValidation } from '../middleware/validation/forms.js';
 
 import { Router } from 'express';
 
@@ -62,13 +63,13 @@ router.get('/demo', addDemoHeaders, demoPage);
 router.get('/test-error', testErrorPage);
 
 // Contact form routes
-router.use('/contact', contactRoutes);
+router.use('/contact', contactValidation, contactRoutes);
 
 // Registration routes
 router.use('/register', registrationRoutes);
 
 // Login routes (form and submission)
-router.use('/login', loginRoutes);
+router.use('/login', loginValidation, loginRoutes);
 
 // Authentication-related routes at root level
 router.get('/logout', processLogout);

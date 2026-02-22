@@ -5,24 +5,6 @@ import { Router } from 'express';
 const router = Router();
 
 /**
- * Validation rules for login form
- */
-const loginValidation = [
-    body('email')
-        .trim()
-        .isEmail()
-        .normalizeEmail()
-        .withMessage('Please provide a valid email address')
-        .isLength({ max: 255 })
-        .withMessage('Email address is too long'),
-    body('password')
-        .notEmpty()
-        .withMessage('Password is required')
-        .isLength({ min: 8, max: 128 })
-        .withMessage('Password must be between 8 and 128 characters')
-];
-
-/**
  * Display the login form.
  */
 const showLoginForm = (req, res) => {
@@ -150,7 +132,7 @@ const showDashboard = (req, res) => {
 
 // Routes
 router.get('/', showLoginForm);
-router.post('/', loginValidation, processLogin);
+router.post('/', processLogin);
 
 // Export router as default, and specific functions for root-level routes
 export default router;
