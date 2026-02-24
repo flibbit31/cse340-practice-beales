@@ -11,8 +11,8 @@
         <p class="faculty-office">Office: <%= facultyMember.office %></p>
         <p class="faculty-phone">Phone: <%= facultyMember.phone %></p>
         <p class="faculty-email">Email: <%= facultyMember.email %></p>
+        <img class="faculty-photo" src="/images/faculty/<%= facultyMember.slug %>.jpg" alt="<%= facultyMember.name %>">
     </div>
-
     <div class="navigation">
         <p><a href="/faculty">&larr; Back to Faculty List</a></p>
     </div>

@@ -9,6 +9,7 @@
                 <h3><a href="/faculty/<%= facultyMember.slug %>"><%= facultyMember.name %></a></h3>
                 <p class="faculty-department"><%= facultyMember.department %></p>
                 <p class="faculty-title"><%= facultyMember.title %></p>
+                <img class="faculty-photo" src="/images/faculty/<%= facultyMember.slug %>.jpg" alt="<%= facultyMember.name %>" style="width:120px;height:120px;">
             </div>
         <% }); %>
     </div>
